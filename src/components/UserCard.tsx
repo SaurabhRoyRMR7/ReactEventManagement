@@ -1,9 +1,9 @@
 import React,{ useState,useEffect }  from 'react';
-import { Users, Calendar, Mail, User } from 'lucide-react'; 
+import { Users, Calendar, Mail, User, RollerCoasterIcon } from 'lucide-react'; 
 import RoleEditPopup from './RoleEditPopup';
 import { toast } from 'react-toastify';
 import axios from "axios";
-import { useLocation } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 
 
 interface UserCardProps {
@@ -21,7 +21,7 @@ export function UserCard({ user , refreshEvents}) {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [isParticipantsRoute, setIsParticipantsRoute] = useState(false);
   const location = useLocation(); 
-  
+  const navigate = useNavigate();
   const roles = [
     { userRoleId: 7, roleName: 'Participant' },
     { userRoleId: 8, roleName: 'Organizer' },
@@ -96,15 +96,21 @@ export function UserCard({ user , refreshEvents}) {
       setIsParticipantsRoute(false);
     }
   }, [location]);
+  const userProfile= (userId)=>{
+    const storedRole = localStorage.getItem('userRole');
+    navigate('/dashboard/user/123/profile?role=admin');
+      navigate(`/dashboard/user/${userId}/profile?role=${storedRole}`);
+  }
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="p-6">
         <div className="flex items-center mb-4">
-          <img 
+          {/* <img 
             // src={user.profilePicture} 
             // alt={`${user.name}'s profile`} 
             className="w-12 h-12 rounded-full object-cover mr-4"
-          />
+          /> */}
+            <User className="w-8 h-8 rounded-full object-cover mr-4 text-gray-500" />
           <h2 className="text-xl font-semibold text-gray-900">{user.name}</h2>
         </div>
 
@@ -115,20 +121,20 @@ export function UserCard({ user , refreshEvents}) {
           </div>
 
           <div className="flex items-center text-gray-600">
-            <User className="w-5 h-5 mr-2" />
+            <RollerCoasterIcon className="w-5 h-5 mr-2" />
             <span>Role: {user.userRole}</span>
           </div>
 
           <div className="flex items-center text-gray-600">
             <Calendar className="w-5 h-5 mr-2" />
-            <span>J</span>
+            <span>DOB:</span>
           </div>
         </div>
 
         <div className="flex flex-wrap space-x-4">
   <button 
     className="mt-6 w-full sm:w-auto bg-blue-600 text-white py-1 px-4 rounded-md hover:bg-blue-700 transition-colors"
-   
+    onClick={() => userProfile(user.userId)}
   >
    View Profile
   </button>

@@ -6,8 +6,8 @@ import { GoogleLogin } from '@react-oauth/google';
 import {jwtDecode} from 'jwt-decode'
 import { FaMicrosoft } from 'react-icons/fa6';
 import { useMsal,useAccount  } from '@azure/msal-react';
-import { ProfileButton } from '../components/dashboard/header/ProfileButton';
-import { PUBLIC_CLIENT_APPLICATION, loginRequest } from '../authConfig';
+import { ProfileButton } from '../dashboard/header/ProfileButton';
+import { PUBLIC_CLIENT_APPLICATION, loginRequest } from '../../authConfig';
 const Login = () => {
     const [loginData, setLoginData] = useState({ email: "", password: "" });
     const navigate = useNavigate(); // For navigation

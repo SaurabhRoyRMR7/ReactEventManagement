@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes ,Navigate} from 'react-router-dom';
-import Registration from './auth/Registration';
-import Login from './auth/Login';
+import Registration from './components/auth/Registration';
+import Login from './components/auth/Login';
 import { Header } from './components/Header.tsx';
 import { EventCard } from './components/Event/EventCard.tsx';
 import { sampleEvents } from './data/sampleEvents.ts';
@@ -12,6 +12,7 @@ import EventRegistration from "./components/Event/EventRegistration.tsx"
 import { AttendeesView } from './components/dashboard/content/views/AttendeesView';
 import Participants from "./components/Participants.tsx";
 import EventDetailPage from "./components/Event/EventDetails.tsx"
+import  UserProfilePage from './components/UserProfilePage.tsx';
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
       <Route path="/event-registration/:eventId" element={<EventRegistration />} />
       <Route path="/event/:eventId/participants" element={<Participants />} />
       <Route path="/event/:eventId" element={<EventDetailPage />} />
+      <Route path="/dashboard/user/:userId/profile" element={<UserProfilePage />} />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
     </div>

@@ -213,6 +213,7 @@ export function DashboardContent({ activeView, events, userRole}: DashboardConte
             <h2 className="text-xl font-semibold">Select a view</h2>
             <p className="text-gray-500 mt-2">Choose an option from the sidebar</p>
           </div>
+      
         );
     }
   };

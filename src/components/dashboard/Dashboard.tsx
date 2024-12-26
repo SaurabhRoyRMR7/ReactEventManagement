@@ -41,17 +41,11 @@ export function Dashboard() {
 
 
     fetchUserProfile(parsedUserId, storedMicosoftredential, storedUserId);
-    // getRoles();
+   
 
   }, []);
 
-  // Fetch roles (hardcoded or from API)
-  // const getRoles = () => {
-  //   setRoles([
-  //     { userRoleId: 7, roleName: 'Participant' },
-  //     { userRoleId: 8, roleName: 'Organizer' }
-  //   ]);
-  // };
+ 
 
 
   const fetchUserInfo = async () => {
@@ -100,7 +94,7 @@ export function Dashboard() {
       }
       catch (err) {
         console.log(err, err.error, 'error check');
-
+         
         if (err.response.status == 401) {
           try {
             const response = await axios.post('https://localhost:7060/api/User/register', registrationData);

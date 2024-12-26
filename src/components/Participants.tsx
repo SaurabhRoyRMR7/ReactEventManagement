@@ -14,7 +14,7 @@ const ParticipantsList = () => {
         axios.get(`https://localhost:7060/api/Event/participants/${eventId}`) // Fetch participants for the event
         .then(response => {
           setParticipants(response.data.$values); // Assuming your API returns participants in $values
-          console.log(participants,'partici[ants');
+          console.log(response.data.$values,'participants');
           setLoading(false);
         })
         .catch(error => {
