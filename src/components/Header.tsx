@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { LogIn ,LogOut, Settings } from 'lucide-react';
 import { NotificationBell } from './dashboard/header/NotificationBell';
 import { ProfileButton } from './dashboard/header/ProfileButton';
 import {  useNavigate } from 'react-router-dom';
 import { useMsal } from "@azure/msal-react";
+import { useChat } from './chat/hooks/useChat';
 export function Header() {
   const { instance } = useMsal();
   const navigate = useNavigate();
+
+  const { notifications, activeRoomId } = useChat();
+
+  const [newNotification,setNewNotification ]= useState(notifications);
+  const [newActiveRoomId,setNewActiveRoomId ]= useState(activeRoomId);
+
+  useEffect(( )=>{
+    setNewNotification(notifications);
+    setNewActiveRoomId(activeRoomId);
+  },[notifications,activeRoomId])
+
+
   const handleLogout = async () => {
     // Logic for logging out (e.g., clear token, redirect to login, etc.)
     localStorage.removeItem('userId');
@@ -56,7 +69,7 @@ export function Header() {
         <div className="flex items-end">
         <div className="flex items-end space-x-4">
         <div className="flex items-end space-x-4">
-          <NotificationBell />
+        <NotificationBell notifications={newNotification} activeRoomId={newActiveRoomId} />
         <ProfileButton/>
         </div>
           {/* Settings Button */}

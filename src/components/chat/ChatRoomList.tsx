@@ -2,56 +2,52 @@ import React from 'react';
 import { ChatRoom } from '../../types/chat';
 import { formatDistanceToNow } from 'date-fns';
 import { FiMessageCircle } from 'react-icons/fi';  // Chat bubble icon
-import { FaRegClock } from 'react-icons/fa';      // Clock icon for timestamps
+import { FaRegClock, FaRestroom } from 'react-icons/fa';      // Clock icon for timestamps
 import { AiOutlineBell } from 'react-icons/ai';    // Bell icon for notifications
+import { BsPerson, BsPeople } from 'react-icons/bs'; // Personal/Group icons
+import { HouseIcon } from 'lucide-react';
 
 interface ChatRoomListProps {
   rooms: ChatRoom[];
-  activeRoomId: string;
-  onRoomSelect: (roomId: string) => void;
+  activeRoomId: number;
+  onRoomSelect: (roomId: number) => void;
 }
 
 export function ChatRoomList({ rooms, activeRoomId, onRoomSelect }: ChatRoomListProps) {
   return (
-    <div className="border-r border-gray-200 w-64 bg-white overflow-y-auto">
-      <div className="p-4 border-b border-gray-200 bg-gray-100">
-        <h2 className="text-lg font-semibold text-gray-700 flex items-center">
-          <AiOutlineBell className="mr-2 text-blue-500" />
-          Chat Rooms
-        </h2>
+    <div className="p-4 border-r border-gray-200 w-100 bg-white">
+      <div className="mb-4 flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-gray-800">Chat Rooms</h2>
+        <button className="text-blue-500 text-lg p-2 hover:bg-gray-100 rounded-full">
+          <FiMessageCircle />
+        </button>
       </div>
-      <div className="divide-y divide-gray-200">
+      <div className="space-y-2">
         {rooms.map((room) => (
           <button
-            key={room.id}
-            onClick={() => onRoomSelect(room.id)}
-            className={`w-full text-left p-4 hover:bg-gray-50 focus:outline-none ${
-              activeRoomId === room.id ? 'bg-blue-50' : ''
+            key={room.chatRoomId}
+            onClick={() => onRoomSelect(room.chatRoomId)}
+            className={`w-full text-left p-4 hover:bg-gray-50 focus:outline-none transition duration-300 ease-in-out rounded-lg ${
+              activeRoomId === room.chatRoomId ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
             }`}
           >
-            <div className="flex items-center justify-between">
-              {/* Room Name and Icon */}
-              <div className="flex items-center">
-                <FiMessageCircle className="w-5 h-5 text-gray-500 mr-3" />
-                <span className="font-medium text-gray-800">{room.name}</span>
-              </div>
-              {/* New Message Indicator */}
-              
+            <div className="flex items-center space-x-3">
+              <HouseIcon className="w-6 h-6 text-green-500" />
+              <span className="font-medium">{room.name}</span>
+              {/* {room.unreadMessages > 0 && (
+                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-500 text-white text-xs font-semibold">
+                  {room.unreadMessages}
+                </span> */}
+              {/* )} */}
             </div>
-
-            {/* Last Message Preview */}
-            {room.lastMessage && (
-              <div className="mt-2 text-sm text-gray-600 truncate">
-                <span className="text-gray-500">Last Message:</span> {room.lastMessage.content}
-              </div>
-              
-            )}
-             <div className="flex items-center text-gray-500">
-                  <FaRegClock className="w-4 h-4 mr-1 text-gray-400" />
-                  <span className="text-xs text-gray-400">
-                    {formatDistanceToNow(room.lastMessage.timestamp, { addSuffix: true })}
-                  </span>
-                </div>
+            <div className="flex items-center justify-between text-xs text-gray-400 mt-1">
+              <FaRegClock className="w-4 h-4" />
+              <span>
+                {/* {room.lastMessage
+                  ? formatDistanceToNow(new Date(room.lastMessage.timestamp), { addSuffix: true })
+                  : 'No messages yet'} */}
+              </span>
+            </div>
           </button>
         ))}
       </div>

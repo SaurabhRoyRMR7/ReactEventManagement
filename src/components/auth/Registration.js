@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import axios for HTTP requests
 import { toast } from 'react-toastify'; // Import toast for notifications
-import {  useNavigate } from 'react-router-dom'; // Import useHistory for navigation
+import { useNavigate } from 'react-router-dom'; // Import useHistory for navigation
 import { GoogleLogin } from '@react-oauth/google';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 const Registration = () => {
-   const [registrationData, setRegistrationData] = useState({
+  const [registrationData, setRegistrationData] = useState({
     name: '',
     email: '',
     password: '',
@@ -24,8 +24,8 @@ const Registration = () => {
   };
   const handleGoogleSuccess = async (response) => {
     console.log(jwtDecode(response.credential));
-    const userInfo=jwtDecode(response.credential);
-    console.log(response,'res');
+    const userInfo = jwtDecode(response.credential);
+    console.log(response, 'res');
 
     // Update the registrationData with Google login details
     setRegistrationData({
@@ -33,20 +33,20 @@ const Registration = () => {
       name: userInfo.name,
       email: userInfo.email,
       googleId: userInfo.email, // Use the Google ID for registration
-      password:userInfo.email, // You can either use the token or skip password
-      userRoleId:7
+      password: userInfo.email, // You can either use the token or skip password
+      userRoleId: 7
     });
-    console.log(registrationData,'reg data');
-    console.log(userInfo,'prof');
-   
-    
+    console.log(registrationData, 'reg data');
+    console.log(userInfo, 'prof');
+
+
     // handleSubmit(new Event('submit')); 
   };
 
   // Register function
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    console.log(registrationData,"Reg data");
+    e.preventDefault();
+    console.log(registrationData, "Reg data");
 
     if (registrationData.userRoleId === '8' && (!registrationData.organizationName || !registrationData.contactInfo)) {
       toast.error('Please provide organization name and contact info for organizers.');
@@ -56,7 +56,7 @@ const Registration = () => {
     try {
       // Replace the URL with your backend API URL
       const response = await axios.post('https://localhost:7060/api/User/register', registrationData);
-      console.log(response,'res');
+      console.log(response, 'res');
 
       if (response.status === 201) {
         toast.success('User registered successfully');
@@ -67,7 +67,7 @@ const Registration = () => {
       toast.error('Error registering user');
     }
   };
-  const handleLoginOnClick=()=>{
+  const handleLoginOnClick = () => {
     navigate('/login');
   }
   const handleGoogleFailure = (error) => {
@@ -183,15 +183,15 @@ const Registration = () => {
                     Already have an account? Login here
                   </div>
                   <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onFailure={handleGoogleFailure}
-            useOneTap
-            theme="outline"
-            type="icon"
-            context='signup'
-            shape="circle"
-            width="100%" // Full width button
-          />
+                    onSuccess={handleGoogleSuccess}
+                    onFailure={handleGoogleFailure}
+                    useOneTap
+                    theme="outline"
+                    type="icon"
+                    context='signup'
+                    shape="circle"
+                    width="100%" // Full width button
+                  />
                 </div>
               </div>
             </div>

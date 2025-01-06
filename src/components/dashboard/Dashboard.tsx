@@ -15,6 +15,8 @@ export function Dashboard() {
   const [userRole, setUserRole] = useState('');
   const [userId, setUserId] = useState('');
   const [user, setUser] = useState({});
+  const microsoftUserApi=`https://graph.microsoft.com/v1.0/me`;
+  const backendAPIUrl=`https://localhost:7060/api`;
 
   // const [roles, setRoles] = useState([]);
   const navigate = useNavigate()
@@ -41,11 +43,11 @@ export function Dashboard() {
 
 
     fetchUserProfile(parsedUserId, storedMicosoftredential, storedUserId);
-   
+
 
   }, []);
 
- 
+
 
 
   const fetchUserInfo = async () => {
@@ -57,7 +59,7 @@ export function Dashboard() {
 
       console.log(response, 'response by instance');
 
-      const user = await fetch('https://graph.microsoft.com/v1.0/me', {
+      const user = await fetch(`${microsoftUserApi}`, {
         headers: {
           Authorization: `Bearer ${response.accessToken}`,
         },
@@ -83,10 +85,10 @@ export function Dashboard() {
 
       try {
 
-        const userExistence = await axios.get(`https://localhost:7060/api/User/user/GetUserByEmail/${userData.mail}`);
+        const userExistence = await axios.get(`${backendAPIUrl}/User/user/GetUserByEmail/${userData.mail}`);
         console.log(userExistence, 'user existence');
 
-        const backendResponse = await axios.post("https://localhost:7060/api/User/google-login", { email: userData.mail });
+        const backendResponse = await axios.post(`${backendAPIUrl}/User/google-login`, { email: userData.mail });
         handleUserBackendResponse(backendResponse);
 
 
@@ -94,28 +96,20 @@ export function Dashboard() {
       }
       catch (err) {
         console.log(err, err.error, 'error check');
-         
+
         if (err.response.status == 401) {
           try {
-            const response = await axios.post('https://localhost:7060/api/User/register', registrationData);
+            const response = await axios.post(`${backendAPIUrl}/User/register`, registrationData);
             console.log(response, 'res');
             if (response.status === 201) {
-              const backendResponse = await axios.post("https://localhost:7060/api/User/google-login", { email: userData.mail });
+              const backendResponse = await axios.post(`${backendAPIUrl}/User/google-login`, { email: userData.mail });
               handleUserBackendResponse(backendResponse);
             }
           } catch (err) {
             console.error(err);
           }
-
         }
-
-      }
-
-
-
-
-
-
+        }
     } catch (error) {
       console.error("Error fetching user data", error);
     }
@@ -138,7 +132,7 @@ export function Dashboard() {
   const fetchUserProfile = async (userId, storedMicosoftredential, storedUserId) => {
 
     if (storedMicosoftredential == null || storedUserId) {
-      axios.get(`https://localhost:7060/api/User/${userId}`)
+      axios.get(`${backendAPIUrl}/User/${userId}`)
         .then(response => {
           setUser(response.data);
           console.log(response.data, 'user data');
@@ -153,18 +147,7 @@ export function Dashboard() {
       fetchUserInfo();
     };
 
-
-
   };
-
-
-
-
-
-
-
-
-
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -181,7 +164,7 @@ export function Dashboard() {
         <DashboardHeader title={getViewTitle(activeView)} />
 
         {/* Dashboard Content (Scrollable) */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-4  scrollbar-hide">
           <DashboardContent
             activeView={activeView}
             events={sampleEvents}

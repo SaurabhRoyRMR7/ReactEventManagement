@@ -1,0 +1,12 @@
+/* Custom CSS to hide scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+    /* Hides the scrollbar */
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    /* For IE and Edge */
+    scrollbar-width: none;
+    /* For Firefox */
+}

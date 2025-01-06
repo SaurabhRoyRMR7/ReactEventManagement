@@ -144,6 +144,7 @@ export function UserCard({ user , refreshEvents}) {
             className="mt-6 w-full sm:w-auto bg-blue-600 text-white py-1 px-4 rounded-md hover:bg-blue-700 transition-colors"
             onClick={() => deleteUser(user.userId)}
           >
+           
             Delete
           </button>
           <button

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Users, Settings, PlusCircle, List, MessageCircle } from 'lucide-react';
+import { Calendar, Users, Settings, PlusCircle, List, MessageCircle, LocateIcon, MapIcon, Map, MapPin } from 'lucide-react';
 import { UserProfile } from './UserProfile';
 import { SidebarButton } from './SidebarButton';
 
@@ -16,6 +16,7 @@ export function Sidebar({ activeView, onViewChange,user,userRole }: SidebarProps
     { id: 'upcoming-events', label: 'Upcoming Events', icon: Calendar },
     { id: 'all-events', label: 'All Events', icon: List },
     { id: 'registered-events', label: 'Registered Events', icon: List },
+    { id: 'location-events', label: 'Location', icon: MapPin },
     { id: 'create', label: 'Create Event', icon: PlusCircle },
     { id: 'users', label: 'All Users', icon: Users },
     { id: 'chat', label: 'Chat', icon: MessageCircle },

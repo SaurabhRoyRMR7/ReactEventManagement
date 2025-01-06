@@ -108,16 +108,16 @@ const EventRegistration = () => {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    axios.post(`https://localhost:7060/api/Event/${registrationData.EventId}/register`, registrationData,{headers})
-      .then(response => {
-        console.log(response,'reg response code check')
-        toast.success('Successfully registered for the event!');
-        navigate('/dashboard');
-      })
-      .catch(error => {
-        console.error('Error during registration', error);
-        toast.error('Error during registration!');
-      });
+    axios.post(`https://localhost:7060/api/Event/${registrationData.EventId}/register`, registrationData, { headers })
+    .then(response => {
+      console.log(response, 'reg response code check')
+      toast.success('Successfully registered for the event!');
+      navigate('/dashboard');
+    })
+    .catch(error => {
+      console.error('Error during registration', error.response || error);
+      toast.error('Error during registration!');
+    });
   };
 
   if (loading) {

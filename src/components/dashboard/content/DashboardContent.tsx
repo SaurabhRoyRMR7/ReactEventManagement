@@ -175,6 +175,9 @@ export function DashboardContent({ activeView, events, userRole}: DashboardConte
     if (activeView === 'all-events') {
       loadEvents();
     }
+    if (activeView === 'location-events') {
+      loadEvents();
+    }
     if (activeView === 'users') {
       getUsers();
     }
@@ -201,6 +204,10 @@ export function DashboardContent({ activeView, events, userRole}: DashboardConte
       
         return <EventsView events={registeredEvents} userRole={userRole}   activeView={activeView} refreshEvents={refreshEvents} />;
 
+        case 'location-events':
+      
+        return <EventsView events={allevents} userRole={userRole}   activeView={activeView} refreshEvents={refreshEvents} />;
+
       case 'create':
         return <CreateEventView />;
       case 'users':
@@ -224,3 +231,8 @@ export function DashboardContent({ activeView, events, userRole}: DashboardConte
     </div>
   );
 }
+
+
+
+
+
